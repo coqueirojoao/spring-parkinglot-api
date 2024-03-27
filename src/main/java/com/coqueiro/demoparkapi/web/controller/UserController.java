@@ -2,6 +2,9 @@ package com.coqueiro.demoparkapi.web.controller;
 
 import com.coqueiro.demoparkapi.entity.User;
 import com.coqueiro.demoparkapi.service.UserService;
+import com.coqueiro.demoparkapi.web.dto.UserCreateDto;
+import com.coqueiro.demoparkapi.web.dto.UserResponseDto;
+import com.coqueiro.demoparkapi.web.dto.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +20,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
-        User createdUser = userService.save(user);
+    public ResponseEntity<UserResponseDto> create(@RequestBody UserCreateDto createDto) {
+        User createdUser = userService.save(UserMapper.toUser(createDto));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDto(createdUser));
     }
 
     @GetMapping("/{id}")
