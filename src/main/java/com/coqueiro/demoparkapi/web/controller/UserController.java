@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/users")
@@ -33,5 +35,12 @@ public class UserController {
         User updatedUser = userService.changePassword(id, user.getPassword());
 
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAll() {
+        List<User> users = userService.findAll();
+
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 }
