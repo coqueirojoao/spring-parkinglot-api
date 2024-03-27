@@ -6,6 +6,9 @@ import com.coqueiro.demoparkapi.web.dto.UserResponseDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class UserMapper {
 
     public static User toUser(UserCreateDto createDto) {
@@ -25,5 +28,9 @@ public class UserMapper {
 
         mapper.addMappings(props);
         return mapper.map(user, UserResponseDto.class);
+    }
+
+    public static List<UserResponseDto> toListDto(List<User> users) {
+        return users.stream().map(UserMapper::toDto).collect(Collectors.toList());
     }
 }
